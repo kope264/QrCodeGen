@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  <title>QR Code Generator</title>
+  <link rel="stylesheet" href="./style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <h1>Generate a QR Code</h1>
+  <form id="qrForm">
+    <label for="url">Enter URL:</label>
+    <input type="text" id="urlInput" name="url" placeholder="https://example.com" required>
+    <button type="submit">Generate QR Code</button>
+  </form>
+  <div id="qrCodeContainer" style="margin-top: 20px;">
+    <h2>Generated QR Code:</h2><br>
+    <img id="qrCodeImage" src="" alt="Your QR Code will appear here" style="display:none;"/>
+  </div>
+
+  <script>
+    // JavaScript to handle the form submission and display the QR code
+    document.getElementById('qrForm').onsubmit = async function (e) {
+      e.preventDefault();
+
+      const url = document.getElementById('urlInput').value;
+      const response = await fetch('/generate-qr', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ url })
+      });
+
+      if (response.ok) {
+        const qrBase64 = await response.text();
+        const qrCodeImage = document.getElementById('qrCodeImage');
+        qrCodeImage.src = qrBase64;
+        qrCodeImage.style.display = 'block';
+      } else {
+        alert("Error generating QR code");
+      }
+    };
+  </script>
+</body>
+</html>
+
+
+
+
+
+
