@@ -1,9 +1,24 @@
 import express from 'express';
+
 import fs from 'fs';
 import path from 'path';
 import { exec } from 'child_process';
 import { fileURLToPath } from 'url';
 import qr from 'qr-image';  // Import qr-image
+
+fs.readFile('input.txt', 'utf8', (err, url) => {
+  if (err) throw err;
+
+  // Generate QR code image
+  const qr_svg = qr.image(url);
+  qr_svg.pipe(fs.createWriteStream('qr_img.png'));
+
+  // Save URL to message.txt
+  fs.writeFile('message.txt', url, (err) => {
+    if (err) throw err;
+    console.log('QR Code and URL saved successfully!');
+  });
+});
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
