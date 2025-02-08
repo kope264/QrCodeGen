@@ -23,6 +23,12 @@ fs.readFile('input.txt', 'utf8', (err, url) => {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const PORT = process.env.PORT || 3000; // Must use process.env.PORT for Railway
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
