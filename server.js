@@ -23,10 +23,6 @@ fs.readFile('input.txt', 'utf8', (err, url) => {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const PORT = process.env.PORT || 3000; // Must use process.env.PORT for Railway
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
 
 
 const app = express();
@@ -51,6 +47,7 @@ app.post('/generate-qr', (req, res) => {
 });
 
 // Start the server
-app.listen(3000, () => {
-  console.log("Server running on http://localhost:3000");
+const PORT = process.env.PORT || 3000; // Must use process.env.PORT for Railway
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
